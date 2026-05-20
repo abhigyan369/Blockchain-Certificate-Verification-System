@@ -3,9 +3,12 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <h2 class="text-center mb-4">Verify Certificate</h2>
+        <div class="text-center mb-4">
+            <h2 class="page-title">Verify Certificate</h2>
+            <p class="page-subtitle">Enter a certificate ID or upload a generated certificate PDF.</p>
+        </div>
 
-        <div class="card shadow-sm">
+        <div class="card">
             <div class="card-body p-4 p-md-5">
                 <form method="post" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
@@ -26,7 +29,7 @@
                         {% endif %}
                     </div>
 
-                    <div class="text-center text-muted mb-4">or</div>
+                    <div class="text-center text-muted mb-4">or upload the certificate file</div>
 
                     <div class="mb-4">
                         <label for="{{ form.certificate_pdf.id_for_label }}" class="form-label">
@@ -42,6 +45,27 @@
                         Verify Certificate
                     </button>
                 </form>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-md-4">
+                <div class="p-3 bg-white border rounded-3 h-100">
+                    <strong>Valid</strong>
+                    <p class="text-muted mb-0 small">The local and blockchain hashes match.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 bg-white border rounded-3 h-100">
+                    <strong>Tampered</strong>
+                    <p class="text-muted mb-0 small">One or more certificate checks failed.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 bg-white border rounded-3 h-100">
+                    <strong>Not Found</strong>
+                    <p class="text-muted mb-0 small">The certificate ID is not in the system.</p>
+                </div>
             </div>
         </div>
     </div>
