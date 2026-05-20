@@ -2,3 +2,4 @@ Django
 reportlab
 qrcode[pil]
 web3
+pypdf
