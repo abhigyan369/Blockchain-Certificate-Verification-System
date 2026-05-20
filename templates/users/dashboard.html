@@ -15,7 +15,7 @@
         <div class="card shadow-sm text-center">
             <div class="card-body py-5">
                 <h5 class="card-title text-muted mb-3">Total Certificates</h5>
-                <h1 class="display-4 text-primary">0</h1>
+                <h1 class="display-4 text-primary">{{ total_certificates }}</h1>
                 <p class="card-text text-muted mt-3">Issued to date</p>
             </div>
         </div>
@@ -25,10 +25,10 @@
             <div class="card-body">
                 <h5 class="card-title">Quick Actions</h5>
                 <hr>
-                <p class="text-muted">Certificate management features will be added here in the upcoming phases.</p>
+                <p class="text-muted">Manage the certificates in the system.</p>
                 <div class="d-grid gap-2 d-md-block mt-4">
-                    <button class="btn btn-primary" type="button" disabled>Issue New Certificate</button>
-                    <button class="btn btn-outline-secondary" type="button" disabled>View All Certificates</button>
+                    <a href="{% url 'certificate_create' %}" class="btn btn-primary">Issue New Certificate</a>
+                    <a href="{% url 'certificate_list' %}" class="btn btn-outline-secondary">View All Certificates</a>
                 </div>
             </div>
         </div>

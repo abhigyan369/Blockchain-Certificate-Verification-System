@@ -25,6 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home_view, name="home"),
     path("", include("users.urls")),
+    path("certificates/", include("certificates.urls")),
 ]
 
 if settings.DEBUG:

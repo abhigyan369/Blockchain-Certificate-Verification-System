@@ -31,6 +31,10 @@ def admin_logout(request):
     logout(request)
     return redirect('home')
 
+from certificates.models import Certificate
+
 @user_passes_test(lambda u: u.is_staff, login_url='login')
 def admin_dashboard(request):
-    return render(request, 'users/dashboard.html')
+    total_certificates = Certificate.objects.count()
+    return render(request, 'users/dashboard.html', {'total_certificates': total_certificates})
+
