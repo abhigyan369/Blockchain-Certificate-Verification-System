@@ -2,10 +2,41 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import FileResponse, Http404
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
+from blockchain.services import (
+    BlockchainError,
+    blockchain_is_configured,
+    store_certificate_hash,
+)
 from .models import Certificate
 from .forms import CertificateForm
 from .utils import generate_certificate_pdf
 from .hash_utils import generate_data_hash
+
+
+def store_hash_on_blockchain_if_ready(request, certificate):
+    if not blockchain_is_configured():
+        messages.warning(
+            request,
+            "Certificate saved locally. Blockchain settings are not configured yet.",
+        )
+        return
+
+    try:
+        transaction_hash = store_certificate_hash(
+            str(certificate.certificate_id),
+            certificate.certificate_hash,
+        )
+    except BlockchainError as exc:
+        messages.warning(
+            request,
+            f"Certificate saved locally, but blockchain storage failed: {exc}",
+        )
+        return
+
+    messages.success(
+        request,
+        f"Certificate hash stored on blockchain. Transaction: {transaction_hash}",
+    )
 
 @user_passes_test(lambda u: u.is_staff, login_url='login')
 def certificate_list(request):
@@ -27,6 +58,8 @@ def certificate_create(request):
             base_url = request.build_absolute_uri('/')[:-1]
             pdf_file = generate_certificate_pdf(certificate, base_url)
             certificate.pdf_file.save(f"{certificate.certificate_id}.pdf", pdf_file, save=True)
+
+            store_hash_on_blockchain_if_ready(request, certificate)
             
             messages.success(request, 'Certificate issued successfully.')
             return redirect('certificate_list')
@@ -50,6 +83,13 @@ def certificate_update(request, certificate_id):
             base_url = request.build_absolute_uri('/')[:-1]
             pdf_file = generate_certificate_pdf(certificate, base_url)
             certificate.pdf_file.save(f"{certificate.certificate_id}.pdf", pdf_file, save=True)
+
+            if blockchain_is_configured():
+                messages.warning(
+                    request,
+                    "Local certificate data was updated. The original blockchain hash "
+                    "cannot be overwritten by this contract.",
+                )
             
             messages.success(request, 'Certificate updated successfully.')
             return redirect('certificate_list')
