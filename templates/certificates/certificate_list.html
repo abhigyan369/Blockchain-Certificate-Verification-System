@@ -37,6 +37,9 @@
                                 <td>{{ cert.course_name }}</td>
                                 <td>{{ cert.issue_date }}</td>
                                 <td>
+                                    {% if cert.pdf_file %}
+                                        <a href="{% url 'certificate_download' cert.certificate_id %}" class="btn btn-sm btn-outline-success">Download PDF</a>
+                                    {% endif %}
                                     <a href="{% url 'certificate_update' cert.certificate_id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
                                     <a href="{% url 'certificate_delete' cert.certificate_id %}" class="btn btn-sm btn-outline-danger">Delete</a>
                                 </td>
