@@ -24,7 +24,8 @@ def certificate_create(request):
             certificate.save(update_fields=['certificate_hash'])
             
             # Generate and save PDF
-            pdf_file = generate_certificate_pdf(certificate)
+            base_url = request.build_absolute_uri('/')[:-1]
+            pdf_file = generate_certificate_pdf(certificate, base_url)
             certificate.pdf_file.save(f"{certificate.certificate_id}.pdf", pdf_file, save=True)
             
             messages.success(request, 'Certificate issued successfully.')
@@ -46,7 +47,8 @@ def certificate_update(request, certificate_id):
             certificate.save(update_fields=['certificate_hash'])
             
             # Regenerate PDF
-            pdf_file = generate_certificate_pdf(certificate)
+            base_url = request.build_absolute_uri('/')[:-1]
+            pdf_file = generate_certificate_pdf(certificate, base_url)
             certificate.pdf_file.save(f"{certificate.certificate_id}.pdf", pdf_file, save=True)
             
             messages.success(request, 'Certificate updated successfully.')

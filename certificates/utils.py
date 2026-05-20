@@ -1,11 +1,14 @@
 import io
+import qrcode
+from PIL import Image
 from django.core.files.base import ContentFile
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import landscape, A4
 from reportlab.lib.units import inch
 from reportlab.lib import colors
+from reportlab.lib.utils import ImageReader
 
-def generate_certificate_pdf(certificate):
+def generate_certificate_pdf(certificate, base_url):
     """
     Generates a PDF certificate dynamically and returns a ContentFile.
     """
@@ -51,6 +54,16 @@ def generate_certificate_pdf(certificate):
     # Certificate ID (bottom right)
     p.setFont("Helvetica", 10)
     p.drawRightString(width - 1 * inch, 0.8 * inch, f"Certificate ID: {certificate.certificate_id}")
+    
+    # QR Code (bottom left)
+    qr_url = f"{base_url}/verify/{certificate.certificate_id}/"
+    qr = qrcode.make(qr_url)
+    qr_io = io.BytesIO()
+    qr.save(qr_io, format='PNG')
+    qr_io.seek(0)
+    
+    qr_image = ImageReader(qr_io)
+    p.drawImage(qr_image, 1 * inch, 0.8 * inch, width=1.5 * inch, height=1.5 * inch)
     
     # Save the PDF
     p.showPage()
