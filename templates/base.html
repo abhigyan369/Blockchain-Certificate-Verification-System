@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Verify</a>
+                        <a class="nav-link" href="{% url 'public_verification' %}">Verify</a>
                     </li>
                     {% if request.user.is_authenticated and request.user.is_staff %}
                     <li class="nav-item">

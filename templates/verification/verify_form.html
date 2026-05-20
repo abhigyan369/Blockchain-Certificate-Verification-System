@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h2 class="text-center mb-4">Verify Certificate</h2>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-4">
+                        <label for="{{ form.certificate_id.id_for_label }}" class="form-label">
+                            Certificate ID
+                        </label>
+                        {{ form.certificate_id }}
+                        {% if form.certificate_id.errors %}
+                            <div class="text-danger small mt-1">{{ form.certificate_id.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="text-center text-muted mb-4">or</div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.certificate_pdf.id_for_label }}" class="form-label">
+                            Upload Certificate PDF
+                        </label>
+                        {{ form.certificate_pdf }}
+                        {% if form.certificate_pdf.errors %}
+                            <div class="text-danger small mt-1">{{ form.certificate_pdf.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Verify Certificate
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
