@@ -26,6 +26,7 @@ urlpatterns = [
     path("", home_view, name="home"),
     path("", include("users.urls")),
     path("certificates/", include("certificates.urls")),
+    path("", include("verification.urls")),
 ]
 
 if settings.DEBUG:
