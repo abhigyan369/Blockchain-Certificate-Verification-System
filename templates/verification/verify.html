@@ -18,6 +18,16 @@
                     <p class="text-muted mt-3">The requested certificate ID does not exist in our system.</p>
                 
                 {% elif status == 'Found' %}
+                    {% if blockchain_configured and blockchain_error %}
+                        <div class="alert alert-warning text-start" role="alert">
+                            Blockchain verification could not be completed: {{ blockchain_error }}
+                        </div>
+                    {% elif not blockchain_configured %}
+                        <div class="alert alert-info text-start" role="alert">
+                            Blockchain verification is not configured yet. Showing local database hash verification.
+                        </div>
+                    {% endif %}
+
                     {% if is_valid %}
                         <div class="mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
@@ -57,6 +67,42 @@
                                 <th class="bg-light">Data Hash (SHA256)</th>
                                 <td class="text-break"><small class="text-muted">{{ certificate.certificate_hash }}</small></td>
                             </tr>
+                            <tr>
+                                <th class="bg-light">Verification Source</th>
+                                <td>{{ verification_source }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Local Hash Match</th>
+                                <td>
+                                    {% if local_hash_valid %}
+                                        <span class="badge bg-success">Valid</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Mismatch</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% if blockchain_valid is not None %}
+                                <tr>
+                                    <th class="bg-light">Blockchain Hash Match</th>
+                                    <td>
+                                        {% if blockchain_valid %}
+                                            <span class="badge bg-success">Valid</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Mismatch</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% if blockchain_record.exists %}
+                                <tr>
+                                    <th class="bg-light">Blockchain Issuer</th>
+                                    <td class="text-break"><code>{{ blockchain_record.issuer }}</code></td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Blockchain Timestamp</th>
+                                    <td>{{ blockchain_record.issued_at }}</td>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
                 {% endif %}
