@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">Admin Dashboard</h2>
+        <div class="alert alert-success" role="alert">
+            Welcome back, <strong>{{ request.user.username }}</strong>! You have been successfully authenticated.
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm text-center">
+            <div class="card-body py-5">
+                <h5 class="card-title text-muted mb-3">Total Certificates</h5>
+                <h1 class="display-4 text-primary">0</h1>
+                <p class="card-text text-muted mt-3">Issued to date</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Quick Actions</h5>
+                <hr>
+                <p class="text-muted">Certificate management features will be added here in the upcoming phases.</p>
+                <div class="d-grid gap-2 d-md-block mt-4">
+                    <button class="btn btn-primary" type="button" disabled>Issue New Certificate</button>
+                    <button class="btn btn-outline-secondary" type="button" disabled>View All Certificates</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
