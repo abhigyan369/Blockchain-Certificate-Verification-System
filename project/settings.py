@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -123,3 +124,16 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # Media files (uploaded files, like PDFs)
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Local blockchain settings.
+# These defaults match Ganache's common local configuration and can be
+# overridden with environment variables on each developer machine.
+BLOCKCHAIN_RPC_URL = os.environ.get("BLOCKCHAIN_RPC_URL", "http://127.0.0.1:7545")
+BLOCKCHAIN_CHAIN_ID = int(os.environ.get("BLOCKCHAIN_CHAIN_ID", "1337"))
+BLOCKCHAIN_CONTRACT_ADDRESS = os.environ.get("BLOCKCHAIN_CONTRACT_ADDRESS", "")
+BLOCKCHAIN_ABI_PATH = os.environ.get(
+    "BLOCKCHAIN_ABI_PATH",
+    str(BASE_DIR / "smart_contract" / "CertificateStore.abi.json"),
+)
+BLOCKCHAIN_ISSUER_ADDRESS = os.environ.get("BLOCKCHAIN_ISSUER_ADDRESS", "")
+BLOCKCHAIN_ISSUER_PRIVATE_KEY = os.environ.get("BLOCKCHAIN_ISSUER_PRIVATE_KEY", "")
