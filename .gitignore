@@ -1,0 +1,113 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# =========================
+# Django
+# =========================
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+# Media Files
+media/
+
+# Static Files (optional)
+staticfiles/
+
+# Django Migrations (optional)
+# Uncomment if you don't want migrations
+# */migrations/*
+# !*/migrations/__init__.py
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.local
+.env.production
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# PyCharm
+# =========================
+.idea/
+
+# =========================
+# macOS
+# =========================
+.DS_Store
+
+# =========================
+# Linux
+# =========================
+*~
+
+# =========================
+# Windows
+# =========================
+Thumbs.db
+
+# =========================
+# Node Modules (if React/JS used later)
+# =========================
+node_modules/
+
+# =========================
+# Blockchain / Ganache
+# =========================
+build/
+cache/
+artifacts/
+
+# Contract deployment secrets
+secret.key
+private_key.txt
+
+# =========================
+# Solidity / Hardhat / Truffle
+# =========================
+coverage/
+typechain/
+typechain-types/
+
+# =========================
+# PDF Certificates
+# =========================
+certificates/generated/
+
+# =========================
+# Uploaded Files
+# =========================
+uploads/
+
+# =========================
+# Testing
+# =========================
+.pytest_cache/
+coverage.xml
+htmlcov/
+
+# =========================
+# Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Misc
+# =========================
+*.swp
+*.swo
