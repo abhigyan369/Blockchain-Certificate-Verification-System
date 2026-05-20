@@ -3,12 +3,15 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <div class="card shadow-sm border-danger mt-4">
+        <div class="card border-danger mt-4">
             <div class="card-body p-4 text-center">
                 <h3 class="text-danger mb-4">Confirm Deletion</h3>
                 
                 <p class="fs-5">Are you sure you want to delete the certificate for <strong>{{ certificate.student_name }}</strong>?</p>
-                <p class="text-muted mb-4">Course: {{ certificate.course_name }} <br> ID: {{ certificate.certificate_id }}</p>
+                <p class="text-muted mb-4">
+                    Course: {{ certificate.course_name }}<br>
+                    ID: <code>{{ certificate.certificate_id }}</code>
+                </p>
 
                 <div class="alert alert-warning" role="alert">
                     <strong>Warning:</strong> This action cannot be undone.

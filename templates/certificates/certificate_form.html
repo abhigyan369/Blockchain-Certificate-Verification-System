@@ -3,12 +3,15 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>{{ action }} Certificate</h2>
+        <div class="page-header">
+            <div>
+                <h2 class="page-title">{{ action }} Certificate</h2>
+                <p class="page-subtitle">Enter certificate details exactly as they should appear.</p>
+            </div>
             <a href="{% url 'certificate_list' %}" class="btn btn-outline-secondary">Cancel</a>
         </div>
 
-        <div class="card shadow-sm">
+        <div class="card">
             <div class="card-body p-4">
                 <form method="POST">
                     {% csrf_token %}

@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Certificates</h2>
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Certificates</h2>
+        <p class="page-subtitle">Manage issued certificates and download generated PDFs.</p>
+    </div>
     <a href="{% url 'certificate_create' %}" class="btn btn-primary">Issue New Certificate</a>
 </div>
 
@@ -15,7 +18,7 @@
     {% endfor %}
 {% endif %}
 
-<div class="card shadow-sm">
+<div class="card">
     <div class="card-body">
         {% if certificates %}
             <div class="table-responsive">
@@ -32,16 +35,19 @@
                     <tbody>
                         {% for cert in certificates %}
                             <tr>
-                                <td>{{ cert.certificate_id|slice:":8" }}...</td>
-                                <td>{{ cert.student_name }}</td>
+                                <td><code>{{ cert.certificate_id|slice:":8" }}...</code></td>
+                                <td class="fw-semibold">{{ cert.student_name }}</td>
                                 <td>{{ cert.course_name }}</td>
                                 <td>{{ cert.issue_date }}</td>
                                 <td>
-                                    {% if cert.pdf_file %}
-                                        <a href="{% url 'certificate_download' cert.certificate_id %}" class="btn btn-sm btn-outline-success">Download PDF</a>
-                                    {% endif %}
-                                    <a href="{% url 'certificate_update' cert.certificate_id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                    <a href="{% url 'certificate_delete' cert.certificate_id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    <div class="action-row">
+                                        {% if cert.pdf_file %}
+                                            <a href="{% url 'certificate_download' cert.certificate_id %}" class="btn btn-sm btn-outline-success">Download</a>
+                                        {% endif %}
+                                        <a href="{% url 'verify_certificate' cert.certificate_id %}" class="btn btn-sm btn-outline-primary">Verify</a>
+                                        <a href="{% url 'certificate_update' cert.certificate_id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                        <a href="{% url 'certificate_delete' cert.certificate_id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </div>
                                 </td>
                             </tr>
                         {% endfor %}
