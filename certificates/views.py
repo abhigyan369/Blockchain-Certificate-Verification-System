@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import Certificate
 from .forms import CertificateForm
 from .utils import generate_certificate_pdf
+from .hash_utils import generate_data_hash
 
 @user_passes_test(lambda u: u.is_staff, login_url='login')
 def certificate_list(request):
@@ -17,6 +18,10 @@ def certificate_create(request):
         form = CertificateForm(request.POST)
         if form.is_valid():
             certificate = form.save()
+            
+            # Generate Hash
+            certificate.certificate_hash = generate_data_hash(certificate)
+            certificate.save(update_fields=['certificate_hash'])
             
             # Generate and save PDF
             pdf_file = generate_certificate_pdf(certificate)
@@ -35,6 +40,10 @@ def certificate_update(request, certificate_id):
         form = CertificateForm(request.POST, instance=certificate)
         if form.is_valid():
             certificate = form.save()
+            
+            # Regenerate Hash
+            certificate.certificate_hash = generate_data_hash(certificate)
+            certificate.save(update_fields=['certificate_hash'])
             
             # Regenerate PDF
             pdf_file = generate_certificate_pdf(certificate)
