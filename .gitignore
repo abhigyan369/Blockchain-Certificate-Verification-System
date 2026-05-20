@@ -76,6 +76,7 @@ artifacts/
 # Contract deployment secrets
 secret.key
 private_key.txt
+smart_contract/deployment.local.json
 
 # =========================
 # Solidity / Hardhat / Truffle

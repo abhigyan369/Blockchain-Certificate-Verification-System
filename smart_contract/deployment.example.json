@@ -1,0 +1,10 @@
+{
+  "networkName": "Ganache Local",
+  "rpcUrl": "http://127.0.0.1:7545",
+  "chainId": 1337,
+  "contractName": "CertificateStore",
+  "contractAddress": "PASTE_DEPLOYED_CONTRACT_ADDRESS_HERE",
+  "abiPath": "smart_contract/CertificateStore.abi.json",
+  "deployedWith": "Remix IDE + MetaMask",
+  "notes": "Copy this file to deployment.local.json after deploying. Do not commit private keys or seed phrases."
+}
